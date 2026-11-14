@@ -357,7 +357,7 @@
   /* --- Shared: merge an array of records into an ordered key list --- */
   function unionKeys(items) {
     var keys = [];
-    var seen = {};
+    var seen = Object.create(null); // plain {} would treat a "__proto__" key as already seen
     for (var i = 0; i < items.length; i++) {
       if (!isPlainObject(items[i])) continue;
       for (var k in items[i]) {
@@ -503,7 +503,7 @@
   }
 
   function makeNamer() {
-    var used = {};
+    var used = Object.create(null);
     return function (base) {
       var name = base;
       var n = 2;
@@ -525,7 +525,7 @@
       var others = v.filter(function (x) { return !isPlainObject(x); });
       var items = [];
       if (objs.length) items.push(mergeObjects(objs));
-      var seen = {};
+      var seen = Object.create(null);
       for (var i = 0; i < others.length; i++) {
         var s = shapeOf(others[i]);
         var sig = JSON.stringify(s);
@@ -546,7 +546,7 @@
       var objVals = values.filter(isPlainObject);
       var shapes = [];
       if (objVals.length) shapes.push(mergeObjects(objVals));
-      var seen = {};
+      var seen = Object.create(null);
       values.filter(function (x) { return !isPlainObject(x); }).forEach(function (x) {
         var s = shapeOf(x);
         var sig = JSON.stringify(s);
@@ -580,7 +580,7 @@
 
     function unionOf(shapes, hint) {
       if (shapes.length === 0) return 'unknown';
-      var seen = {};
+      var seen = Object.create(null);
       var parts = [];
       shapes.forEach(function (s) {
         var t = typeFor(s, hint);
@@ -641,7 +641,7 @@
     /** Union of shapes; a null among them makes the result Optional[...]. */
     function unionOf(shapes, hint) {
       if (shapes.length === 0) { needs.Any = true; return 'Any'; }
-      var seen = {};
+      var seen = Object.create(null);
       var parts = [];
       var hasNone = false;
       shapes.forEach(function (s) {
@@ -675,7 +675,7 @@
 
     function emitClass(shape, hint) {
       var name = namer(pascalCase(hint, 'Model'));
-      var used = {};
+      var used = Object.create(null);
       var lines = ['class ' + name + '(BaseModel):'];
       var aliased = false;
       if (shape.fields.length === 0) lines.push('    pass');

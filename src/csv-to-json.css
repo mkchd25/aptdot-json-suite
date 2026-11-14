@@ -1,0 +1,185 @@
+/* ==========================================================================
+   Aptdot CSV to JSON Converter - extras on top of json-validator.css
+   (all rules scoped to .aptdot-csv2json)
+   ========================================================================== */
+.aptdot-csv2json .c2j-file {
+    display: none !important;
+}
+
+.aptdot-csv2json .c2j-field {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    margin: 0 !important;
+    font-size: 12px !important;
+    color: #8b949e !important;
+}
+
+.aptdot-csv2json .c2j-field-label {
+    display: inline !important;
+    margin: 0 !important;
+    font-weight: 400 !important;
+    cursor: pointer !important;
+    color: #8b949e !important;
+    font-size: 12px !important;
+    white-space: nowrap !important;
+}
+
+/* Editor */
+.aptdot-csv2json .c2j-gutter {
+    white-space: pre !important;
+}
+
+.aptdot-csv2json textarea.c2j-input {
+    flex: 1 1 auto !important;
+    width: 100% !important;
+    min-height: 240px !important;
+    margin: 0 !important;
+    background-color: #161b22 !important;
+    color: #e6edf3 !important;
+    padding: 12px 14px !important;
+    border: none !important;
+    border-radius: 0 !important;
+    outline: none !important;
+    box-shadow: none !important;
+    font-family: Consolas, Monaco, "Courier New", monospace !important;
+    font-size: 13px !important;
+    line-height: 20px !important;
+    box-sizing: border-box !important;
+    white-space: pre !important;
+    overflow-x: auto !important;
+    resize: vertical !important;
+}
+
+.aptdot-csv2json textarea.c2j-input::placeholder {
+    color: #8b949e !important;
+    opacity: 1 !important;
+}
+
+/* Options */
+.aptdot-csv2json .c2j-toolbar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+}
+
+.aptdot-csv2json .c2j-options {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px 16px !important;
+    padding: 10px 12px !important;
+    background: #0d1117 !important;
+    border: 1px solid #30363d !important;
+    border-radius: 6px !important;
+}
+
+.aptdot-csv2json .c2j-check {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    margin: 0 !important;
+    font-size: 12.5px !important;
+    color: #c9d1d9 !important;
+    cursor: pointer !important;
+    line-height: 1.4 !important;
+}
+
+.aptdot-csv2json .c2j-check input {
+    width: 15px !important;
+    height: 15px !important;
+    margin: 0 !important;
+    accent-color: #2ea043;
+    cursor: pointer !important;
+}
+
+.aptdot-csv2json .c2j-check:focus-within,
+.aptdot-csv2json select.aptdot-select:focus-visible,
+.aptdot-csv2json .aptdot-tool-btn:focus-visible {
+    outline: 2px solid #58a6ff !important;
+    outline-offset: 2px !important;
+    border-radius: 4px !important;
+}
+
+/* Output */
+.aptdot-csv2json .c2j-title-wrap {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: baseline !important;
+    gap: 4px 12px !important;
+}
+
+.aptdot-csv2json .c2j-stats {
+    font-size: 12px !important;
+    color: #8b949e !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
+
+.aptdot-csv2json .aptdot-panel-header {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+}
+
+.aptdot-csv2json .aptdot-panel-actions {
+    display: flex !important;
+    gap: 6px !important;
+}
+
+.aptdot-csv2json pre.c2j-code {
+    margin: 0 !important;
+    padding: 12px 14px !important;
+    max-height: 560px !important;
+    overflow: auto !important;
+    background: #161b22 !important;
+    border: 0 !important;
+    border-radius: 0 0 8px 8px !important;
+    color: #e6edf3 !important;
+    font-family: Consolas, Monaco, "Courier New", monospace !important;
+    font-size: 13px !important;
+    line-height: 20px !important;
+    white-space: pre !important;
+    box-shadow: none !important;
+}
+
+.aptdot-csv2json pre.c2j-code code {
+    background: transparent !important;
+    border: 0 !important;
+    padding: 0 !important;
+    color: inherit !important;
+    font: inherit !important;
+    white-space: inherit !important;
+}
+
+.aptdot-csv2json .c2j-warn {
+    background: #21262d !important;
+    border-left: 4px solid #d29922 !important;
+    color: #e3b341 !important;
+}
+
+.aptdot-csv2json .c2j-error {
+    background: #261c0e !important;
+    border-left: 4px solid #f85149 !important;
+    color: #ff7b72 !important;
+}
+
+.aptdot-csv2json .c2j-list {
+    margin: 6px 0 0 18px !important;
+    padding: 0 !important;
+}
+
+.aptdot-csv2json .c2j-list li,
+.aptdot-csv2json .c2j-msg {
+    margin: 2px 0 !important;
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+    color: inherit !important;
+}
+
+.aptdot-csv2json .c2j-more {
+    border-top: 1px solid #30363d !important;
+}
+
+/* Phones: 16px stops iPhones zooming into the input box */
+@media (max-width: 768px) {
+    .aptdot-csv2json textarea.c2j-input {
+        font-size: 16px !important;
+    }
+}
