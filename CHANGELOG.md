@@ -2,6 +2,20 @@
 
 All notable changes to this project are listed here. Versions follow [Semantic Versioning](https://semver.org/).
 
+## [2.1.0] - 2026-11-13
+
+### Added
+- CSV to JSON converter (`src/csv-to-json.js`, `src/csv-to-json.css`), live at https://www.aptdot.com/tools/csv-to-json/.
+  - RFC 4180 parsing: quoted fields, doubled quotes, line breaks inside cells, CRLF, LF and CR line endings.
+  - Detects comma, semicolon, tab and pipe; honours an Excel `sep=` line and removes the UTF-8 byte-order mark.
+  - Typed output that never changes a value: leading zeros, `+5`, `.5`, integers above 2^53 and long decimals stay text, and a column is typed only if every value fits.
+  - Nested objects from dotted headers, JSON inside cells, JSON Lines output, and warnings with line numbers for ragged rows and duplicate or empty headers.
+- Automated tests and a GitHub Actions workflow.
+
+### Fixed
+- JSON to CSV dropped a column named `__proto__`.
+- JSON to TypeScript and JSON to Python dropped keys named after built-in object properties, such as `constructor` or `toString`, and JSON to Python renamed `constructor` to `constructor_2`. Internal key maps now have no prototype.
+
 ## [2.0.0] - 2026-11-10
 
 This is the engine that has been running on aptdot.com. Upgrading is recommended for anyone who copied v1.
@@ -24,4 +38,5 @@ This is the engine that has been running on aptdot.com. Upgrading is recommended
 
 - First public release: formatter, minifier, JSON-LD validator and converters to YAML, CSV, TypeScript, Python and Markdown.
 
+[2.1.0]: https://github.com/mkchd25/aptdot-json-suite/releases/tag/v2.1.0
 [2.0.0]: https://github.com/mkchd25/aptdot-json-suite/releases/tag/v2.0.0

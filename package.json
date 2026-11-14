@@ -1,0 +1,14 @@
+{
+  "name": "aptdot-json-suite",
+  "version": "2.1.0",
+  "private": true,
+  "description": "Browser-only JSON tools from aptdot.com: formatter, validator and converters, including CSV to JSON. No dependencies at runtime.",
+  "license": "MIT",
+  "scripts": {
+    "test": "node tests/test-csv-to-json.mjs"
+  },
+  "devDependencies": {
+    "acorn": "8.19.0",
+    "jsdom": "29.1.1"
+  }
+}
