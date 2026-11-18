@@ -2,6 +2,16 @@
 
 All notable changes to this project are listed here. Versions follow [Semantic Versioning](https://semver.org/).
 
+## [2.1.1] - 2026-11-18
+
+### Security
+- Share links now keep the JSON after `#` (`#data=`) instead of in the query string (`?data=`). Browsers never send the part after `#` to the server, so shared JSON no longer reaches server logs, CDN logs or analytics as part of the page request.
+- When a share link is opened, the JSON is removed from the address bar after it loads, so it is not kept in browser history.
+
+### Changed
+- Older `?data=` links still open, and are cleaned from the address bar in the same way.
+- A share link pasted into the address bar of an open tool page now loads.
+
 ## [2.1.0] - 2026-11-13
 
 ### Added
@@ -38,5 +48,6 @@ This is the engine that has been running on aptdot.com. Upgrading is recommended
 
 - First public release: formatter, minifier, JSON-LD validator and converters to YAML, CSV, TypeScript, Python and Markdown.
 
+[2.1.1]: https://github.com/mkchd25/aptdot-json-suite/releases/tag/v2.1.1
 [2.1.0]: https://github.com/mkchd25/aptdot-json-suite/releases/tag/v2.1.0
 [2.0.0]: https://github.com/mkchd25/aptdot-json-suite/releases/tag/v2.0.0

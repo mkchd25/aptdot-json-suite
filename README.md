@@ -32,7 +32,7 @@ This repository holds the JavaScript engine that runs the JSON tools on [aptdot.
 Formatting, validation and conversion happen entirely in your browser. The tools make no network request with your data, with these exceptions, which only happen when you use them:
 
 - **Load from URL** requests that URL from your browser. If the site blocks it, the tool asks before retrying through the public proxy `allorigins.win`, which would then see the URL.
-- **Share link** puts your JSON inside the link. Anyone with the link can read it, and like any web address it reaches the web server when opened. Do not share sensitive data this way.
+- **Share link** puts your JSON inside the link, after the `#`. Browsers never send that part of a link to the web server, and the tool removes it from the address bar once the JSON is loaded. Anyone you give the link to can read the JSON, so do not share sensitive data this way.
 - **Recent history** keeps your last 5 inputs in your browser's local storage on your own device, when storage is available.
 
 Even for a page that uploads nothing, other scripts in your browser, such as extensions, can read what you paste. Use test data or redacted copies rather than live secrets.

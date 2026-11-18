@@ -6,6 +6,9 @@
  *    errors and linter messages).
  *  - Share links use base64url and decode correctly ('+', '%', non-ASCII);
  *    old v1 links still open.
+ *  - v2.1.1: share links keep the data after # (never sent to the server);
+ *    older ?data= links still open, and the data is then removed from the
+ *    address bar.
  *  - localStorage is optional: blocked storage no longer stops the tool.
  *  - Input is parsed as-is first; trailing commas are repaired only on failure,
  *    outside strings, and always reported.
@@ -943,13 +946,43 @@
       });
     }
 
-    /* --- Shared link hydration (?data=) --- */
-    try {
-      var params = new URLSearchParams(window.location.search);
-      if (params.has('data')) setInput(decodeShare(params.get('data')));
-    } catch (e) {
-      showNotice('error', msg('This shared link could not be decoded. It may have been cut short when it was copied.'));
+    /* --- Shared links (#data=; older ?data= links still open) ---
+     * The part of a link after # is never sent to the server. After the data
+     * is loaded it is removed from the address bar, so it is not kept in
+     * browser history and other scripts on the page cannot read it later. */
+    function sharedParams(text) {
+      try { return new URLSearchParams(String(text).replace(/^[#?]/, '')); } catch (e) { return null; }
     }
+    // Remove data= from one part of the address; anything else is kept as it is.
+    function withoutData(part, mark) {
+      var params = sharedParams(part);
+      if (!params || params.get('data') === null) return part;
+      params['delete']('data');
+      var rest = params.toString();
+      return rest ? mark + rest : '';
+    }
+    function removeSharedDataFromAddressBar() {
+      if (!window.history || typeof window.history.replaceState !== 'function') return;
+      try {
+        window.history.replaceState(window.history.state, '', window.location.pathname +
+          withoutData(window.location.search, '?') + withoutData(window.location.hash, '#'));
+      } catch (e) { /* the data stays in the address bar; nothing else breaks */ }
+    }
+    function loadSharedLink() {
+      var hash = sharedParams(window.location.hash);
+      var query = sharedParams(window.location.search);
+      var shared = (hash && hash.get('data')) || (query && query.get('data'));
+      if (!shared) return;
+      try {
+        setInput(decodeShare(shared));
+      } catch (e) {
+        showNotice('error', msg('This shared link could not be decoded. It may have been cut short when it was copied.'));
+      }
+      removeSharedDataFromAddressBar();
+    }
+    loadSharedLink();
+    // A share link pasted into the address bar of an open tool page.
+    window.addEventListener('hashchange', loadSharedLink);
 
     /* --- Actions --- */
     var ACTIONS = {
@@ -1090,7 +1123,7 @@
         }
         var link;
         try {
-          link = window.location.origin + window.location.pathname + '?data=' + encodeShare(raw);
+          link = window.location.origin + window.location.pathname + '#data=' + encodeShare(raw);
         } catch (e) {
           showNotice('error', msg('This input could not be encoded for a link.'));
           return;
