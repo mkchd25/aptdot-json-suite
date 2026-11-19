@@ -9,6 +9,10 @@
  *  - v2.1.1: share links keep the data after # (never sent to the server);
  *    older ?data= links still open, and the data is then removed from the
  *    address bar.
+ *  - v2.1.2: reads share data handed over by an early page script, so the
+ *    address bar can be cleaned before third-party scripts load. CSV and
+ *    Markdown tables leave a missing column empty instead of printing a
+ *    built-in such as "function Object() { [native code] }".
  *  - localStorage is optional: blocked storage no longer stops the tool.
  *  - Input is parsed as-is first; trailing commas are repaired only on failure,
  *    outside strings, and always reported.
@@ -373,6 +377,12 @@
     return keys;
   }
 
+  /* --- Shared: a row's own value for a column (a missing column is empty,
+   * never a built-in such as Object.prototype.constructor) --- */
+  function ownValue(row, key) {
+    return Object.prototype.hasOwnProperty.call(row, key) ? row[key] : undefined;
+  }
+
   /* --- CSV (RFC 4180) --- */
   function csvCell(val) {
     if (val === undefined || val === null) return '';
@@ -400,7 +410,7 @@
     lines.push(headers.map(csvCell).join(','));
     for (var r = 0; r < items.length; r++) {
       var row = items[r];
-      lines.push(headers.map(function (h) { return csvCell(row[h]); }).join(','));
+      lines.push(headers.map(function (h) { return csvCell(ownValue(row, h)); }).join(','));
     }
     return lines.join('\r\n');
   }
@@ -424,7 +434,7 @@
     md += '| ' + headers.map(function () { return '---'; }).join(' | ') + ' |\n';
     for (var r = 0; r < items.length; r++) {
       var row = items[r];
-      md += '| ' + headers.map(function (h) { return mdCell(row[h]); }).join(' | ') + ' |\n';
+      md += '| ' + headers.map(function (h) { return mdCell(ownValue(row, h)); }).join(' | ') + ' |\n';
     }
     return md;
   }
@@ -969,8 +979,13 @@
       } catch (e) { /* the data stays in the address bar; nothing else breaks */ }
     }
     function loadSharedLink() {
-      var hash = sharedParams(window.location.hash);
-      var query = sharedParams(window.location.search);
+      // On aptdot.com a small script at the top of the page has already moved
+      // the link's data out of the address bar (before any ad or analytics
+      // script could read it) and kept it in window.__aptdotShareStash.
+      var stash = window.__aptdotShareStash || null;
+      window.__aptdotShareStash = null;
+      var hash = sharedParams(stash ? stash.hash : window.location.hash);
+      var query = sharedParams(stash ? stash.search : window.location.search);
       var shared = (hash && hash.get('data')) || (query && query.get('data'));
       if (!shared) return;
       try {

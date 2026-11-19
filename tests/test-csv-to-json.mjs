@@ -64,6 +64,15 @@ console.log(`  fuzz: ${cases.length} cases, ${parseMismatch} parse mismatches; d
 const jdom = new JSDOM('<!doctype html><html><body></body></html>', { runScripts: 'outside-only' });
 jdom.window.eval(fs.readFileSync(jsonEnginePath, 'utf8'));
 const jsonToCsv = jdom.window.AptdotJsonSuite.jsonToCsv;
+
+// JSON engine: a column missing from a row is empty, never a built-in value
+{
+  const S = jdom.window.AptdotJsonSuite;
+  const rows = [{ a: 1 }, { a: 2, constructor: 'c', toString: 't', valueOf: 'v', hasOwnProperty: 'h' }];
+  const outs = [S.jsonToCsv(rows), S.jsonToMarkdown(rows), S.jsonToYaml(rows), S.jsonToTypeScript(rows), S.jsonToPython(rows), S.jsonToXml(rows)];
+  ok(outs.every(o => !/native code|function /.test(o)), 'JSON engine: missing built-in-named columns stay empty in every converter');
+  ok(S.jsonToCsv(rows).split('\r\n')[1] === '"1",,,,', 'JSON to CSV: missing columns are empty cells');
+}
 let seed = 7;
 const rnd = () => { seed = (seed * 1103515245 + 12345) & 0x7fffffff; return seed / 0x7fffffff; };
 const pick = a => a[Math.floor(rnd() * a.length)];

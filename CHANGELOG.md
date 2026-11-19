@@ -2,6 +2,17 @@
 
 All notable changes to this project are listed here. Versions follow [Semantic Versioning](https://semver.org/).
 
+## [2.1.2] - 2026-11-18
+
+### Security
+- Ad and analytics scripts could read a share link's data from the address bar before the tool removed it: AdSense sends the full page address, including the part after `#`, with its ad request. A small script now runs at the very top of the page (`src/share-link-guard.js`, printed inline by the WordPress plugin), removes the data from the address bar before any other script loads, and hands it to the engine through `window.__aptdotShareStash`.
+
+### Fixed
+- JSON to CSV and JSON to Markdown printed `function Object() { [native code] }` (or similar) in a row that lacked a column named after a built-in, such as `constructor` or `toString`. Missing columns are now empty.
+
+### Changed
+- The engine reads the handed-over data when present, and still reads the address bar itself when the guard is not used.
+
 ## [2.1.1] - 2026-11-18
 
 ### Security
@@ -48,6 +59,7 @@ This is the engine that has been running on aptdot.com. Upgrading is recommended
 
 - First public release: formatter, minifier, JSON-LD validator and converters to YAML, CSV, TypeScript, Python and Markdown.
 
+[2.1.2]: https://github.com/mkchd25/aptdot-json-suite/releases/tag/v2.1.2
 [2.1.1]: https://github.com/mkchd25/aptdot-json-suite/releases/tag/v2.1.1
 [2.1.0]: https://github.com/mkchd25/aptdot-json-suite/releases/tag/v2.1.0
 [2.0.0]: https://github.com/mkchd25/aptdot-json-suite/releases/tag/v2.0.0
