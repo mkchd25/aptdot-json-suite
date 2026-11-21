@@ -2,6 +2,19 @@
 
 All notable changes to this project are listed here. Versions follow [Semantic Versioning](https://semver.org/).
 
+## [2.2.0] - 2026-11-20
+
+### Added
+- YAML to JSON converter (`src/yaml-to-json.js`, `src/yaml-to-json.css`), live at https://www.aptdot.com/tools/yaml-to-json/.
+  - YAML 1.2 rules: `NO`, `yes`, `on` and dates stay text. Files that declare `%YAML 1.1` are read with YAML 1.1 rules, with a note.
+  - Numbers keep the digits written in the YAML (`2.50` stays `2.50`, very large integers keep every digit); numbers written with a leading zero (`02115`, `0644`) stay text by default.
+  - Anchors, aliases and merge keys (`<<`); key order kept exactly; sets and ordered maps keep their contents.
+  - CloudFormation tags (`!Ref`, `!Sub`, `!GetAtt` ...) become their JSON forms; other custom tags are kept as keys.
+  - Multiple documents as a JSON array, JSON Lines or first only; duplicate keys and syntax errors reported with line and column.
+  - Integers are read exactly at any size and in any notation (hex, octal, `!!int "..."`) and written as plain decimal digits.
+  - Alias bombs and self-referencing aliases (also when used as keys) are stopped with a clear message.
+- Bundled YAML parser: `src/vendor/yaml.min.js` (yaml 2.9.1 by Eemeli Aro, ISC licence).
+
 ## [2.1.2] - 2026-11-18
 
 ### Security
@@ -59,6 +72,7 @@ This is the engine that has been running on aptdot.com. Upgrading is recommended
 
 - First public release: formatter, minifier, JSON-LD validator and converters to YAML, CSV, TypeScript, Python and Markdown.
 
+[2.2.0]: https://github.com/mkchd25/aptdot-json-suite/releases/tag/v2.2.0
 [2.1.2]: https://github.com/mkchd25/aptdot-json-suite/releases/tag/v2.1.2
 [2.1.1]: https://github.com/mkchd25/aptdot-json-suite/releases/tag/v2.1.1
 [2.1.0]: https://github.com/mkchd25/aptdot-json-suite/releases/tag/v2.1.0

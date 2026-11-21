@@ -1,6 +1,6 @@
 # Aptdot JSON Suite
 
-Free, browser-based JSON tools: format, minify, validate, convert CSV to JSON, and convert JSON to YAML, CSV, TypeScript, Python (Pydantic v2) and Markdown. Your data is processed in your own browser and is not uploaded.
+Free, browser-based JSON tools: format, minify, validate, convert CSV and YAML to JSON, and convert JSON to YAML, CSV, TypeScript, Python (Pydantic v2) and Markdown. Your data is processed in your own browser and is not uploaded.
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Tests](https://github.com/mkchd25/aptdot-json-suite/actions/workflows/test.yml/badge.svg)](https://github.com/mkchd25/aptdot-json-suite/actions/workflows/test.yml)
@@ -15,6 +15,7 @@ This repository holds the JavaScript engine that runs the JSON tools on [aptdot.
 | [JSON Formatter & Minifier](https://www.aptdot.com/tools/json-formatter-minifier/) | Pretty-print or minify JSON, with line-and-column error messages |
 | [JSON-LD Schema Validator](https://www.aptdot.com/tools/json-ld-validator/) | Checks Schema.org JSON-LD syntax and common structured-data mistakes |
 | [JSON to YAML Converter](https://www.aptdot.com/tools/json-to-yaml/) | YAML 1.2 output for Docker Compose, Kubernetes and CI files |
+| [YAML to JSON Converter](https://www.aptdot.com/tools/yaml-to-json/) | YAML 1.2 rules, exact numbers, anchors and merge keys, CloudFormation tags, errors with line and column |
 | [JSON to CSV Converter](https://www.aptdot.com/tools/json-to-csv/) | RFC 4180 CSV with correct quoting of commas, quotes and line breaks |
 | [CSV to JSON Converter](https://www.aptdot.com/tools/csv-to-json/) | Typed, nested JSON or JSON Lines from CSV, with delimiter detection and safe handling of leading zeros and long IDs |
 | [JSON to TypeScript Converter](https://www.aptdot.com/tools/json-to-typescript/) | TypeScript interfaces that compile with `tsc` |
@@ -44,6 +45,7 @@ Even for a page that uploads nothing, other scripts in your browser, such as ext
 - Output is checked to parse in its target format: YAML with js-yaml and PyYAML, TypeScript with `tsc`, Python with Pydantic v2, CSV against RFC 4180.
 
 - `src/csv-to-json.js` and `src/csv-to-json.css`: the CSV to JSON converter. It is separate from the main engine, makes no network requests and stores nothing.
+- `src/yaml-to-json.js` and `src/yaml-to-json.css`: the YAML to JSON converter. It reads YAML with `src/vendor/yaml.min.js` and writes the JSON itself, so numbers keep their digits and key order is kept. It makes no network requests and stores nothing.
 
 The main engine expects the page markup used on aptdot.com, so the simplest way to try it is on the [live site](https://www.aptdot.com/tools/json-formatter-minifier/).
 
@@ -62,6 +64,10 @@ The main engine expects the page markup used on aptdot.com, so the simplest way 
 
 Options (all optional; these are the defaults): `delimiter: 'auto'`, `header: true`, `types: true`, `consistent: true` (a column is typed only if every value fits), `jsonCells: true`, `nested: true` (dotted headers become objects), `trim: false`, `unguard: false` (remove the `'` formula guard), `empty: 'string'` (or `'null'`, `'omit'`), `output: 'objects'` (or `'arrays'`, `'ndjson'`), `indent: 2` (or `4`, `'\t'`, `0`).
 
+## Third-party code
+
+`src/vendor/yaml.min.js` is the parser from the [yaml](https://github.com/eemeli/yaml) library by Eemeli Aro (version 2.9.1, ISC licence), bundled for the browser. Its licence notice is kept at the top of the file. Everything else in this repository is MIT licensed.
+
 ## Tests
 
 ```
@@ -69,7 +75,7 @@ npm ci
 npm test
 ```
 
-The tests check the CSV parser against Python's `csv` module on 600 generated files, check that CSV written by the JSON to CSV converter converts back to the same data, and test the page interface in jsdom. They run on every push.
+The tests check the CSV parser against Python's `csv` module on 600 generated files, check that CSV written by the JSON to CSV converter converts back to the same data, check the YAML converter against the independent js-yaml parser and with YAML written by two different libraries and by the JSON to YAML converter, and test both page interfaces in jsdom. They run on every push.
 
 ## Changelog, security and issues
 
