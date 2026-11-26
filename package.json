@@ -1,16 +1,17 @@
 {
   "name": "aptdot-json-suite",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "private": true,
-  "description": "Browser-only JSON tools from aptdot.com: formatter, validator and converters, including CSV to JSON and YAML to JSON.",
+  "description": "Browser-only JSON tools from aptdot.com: formatter, validator, JSON Compare and converters, including CSV to JSON and YAML to JSON.",
   "license": "MIT",
   "scripts": {
-    "test": "node tests/test-csv-to-json.mjs && node tests/test-yaml-to-json.mjs"
+    "test": "node tests/test-csv-to-json.mjs && node tests/test-yaml-to-json.mjs && node tests/test-json-compare.mjs"
   },
   "devDependencies": {
     "acorn": "8.19.0",
-    "jsdom": "29.1.1",
+    "fast-json-patch": "3.1.2",
     "js-yaml": "4.3.2",
+    "jsdom": "29.1.1",
     "yaml": "2.9.1"
   }
 }

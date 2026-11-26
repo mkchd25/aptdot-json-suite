@@ -1,6 +1,6 @@
 # Aptdot JSON Suite
 
-Free, browser-based JSON tools: format, minify, validate, convert CSV and YAML to JSON, and convert JSON to YAML, CSV, TypeScript, Python (Pydantic v2) and Markdown. Your data is processed in your own browser and is not uploaded.
+Free, browser-based JSON tools: format, minify, validate, compare two JSON documents, convert CSV and YAML to JSON, and convert JSON to YAML, CSV, TypeScript, Python (Pydantic v2) and Markdown. Your data is processed in your own browser and is not uploaded.
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Tests](https://github.com/mkchd25/aptdot-json-suite/actions/workflows/test.yml/badge.svg)](https://github.com/mkchd25/aptdot-json-suite/actions/workflows/test.yml)
@@ -13,6 +13,7 @@ This repository holds the JavaScript engine that runs the JSON tools on [aptdot.
 | Tool | What it does |
 | :--- | :--- |
 | [JSON Formatter & Minifier](https://www.aptdot.com/tools/json-formatter-minifier/) | Pretty-print or minify JSON, with line-and-column error messages |
+| [JSON Compare](https://www.aptdot.com/tools/json-compare/) | Lists every added, removed and changed value with its path, compares large numbers exactly, exports JSON Patch (RFC 6902) |
 | [JSON-LD Schema Validator](https://www.aptdot.com/tools/json-ld-validator/) | Checks Schema.org JSON-LD syntax and common structured-data mistakes |
 | [JSON to YAML Converter](https://www.aptdot.com/tools/json-to-yaml/) | YAML 1.2 output for Docker Compose, Kubernetes and CI files |
 | [YAML to JSON Converter](https://www.aptdot.com/tools/yaml-to-json/) | YAML 1.2 rules, exact numbers, anchors and merge keys, CloudFormation tags, errors with line and column |
@@ -45,6 +46,7 @@ Even for a page that uploads nothing, other scripts in your browser, such as ext
 - Output is checked to parse in its target format: YAML with js-yaml and PyYAML, TypeScript with `tsc`, Python with Pydantic v2, CSV against RFC 4180.
 
 - `src/csv-to-json.js` and `src/csv-to-json.css`: the CSV to JSON converter. It is separate from the main engine, makes no network requests and stores nothing.
+- `src/json-compare.js` and `src/json-compare.css`: JSON Compare. It reads JSON with its own parser instead of `JSON.parse`, so large numbers are compared digit by digit and duplicate keys are reported. Lists are compared with the Myers difference algorithm (as in `git diff`). It makes no network requests and stores nothing.
 - `src/yaml-to-json.js` and `src/yaml-to-json.css`: the YAML to JSON converter. It reads YAML with `src/vendor/yaml.min.js` and writes the JSON itself, so numbers keep their digits and key order is kept. It makes no network requests and stores nothing.
 
 The main engine expects the page markup used on aptdot.com, so the simplest way to try it is on the [live site](https://www.aptdot.com/tools/json-formatter-minifier/).
@@ -64,6 +66,22 @@ The main engine expects the page markup used on aptdot.com, so the simplest way 
 
 Options (all optional; these are the defaults): `delimiter: 'auto'`, `header: true`, `types: true`, `consistent: true` (a column is typed only if every value fits), `jsonCells: true`, `nested: true` (dotted headers become objects), `trim: false`, `unguard: false` (remove the `'` formula guard), `empty: 'string'` (or `'null'`, `'omit'`), `output: 'objects'` (or `'arrays'`, `'ndjson'`), `indent: 2` (or `4`, `'\t'`, `0`).
 
+## JSON Compare in your own code
+
+`src/json-compare.js` can also be used on its own. Load it on a page and call `AptdotJsonCompare.compare`:
+
+```html
+<script src="json-compare.js"></script>
+<script>
+  var result = AptdotJsonCompare.compare('{"id": 12345678901234567890}', '{"id": 12345678901234567891}');
+  // result.stats -> { added: 0, removed: 0, changed: 1, total: 1 }
+  // AptdotJsonCompare.patchToJson(result.patch, true) ->
+  // [{"op": "replace", "path": "/id", "value": 12345678901234567891}]
+</script>
+```
+
+Options (all optional; these are the defaults): `arrays: 'smart'` (or `'position'`, `'unordered'`, `'key'`), `arrayKey: 'id'` (used when `arrays` is `'key'`), `ignoreKeys: ''` (comma-separated key names, ignored anywhere), `numbersByValue: true` (`1`, `1.0` and `1e0` are equal), `nullEqualsMissing: false` (when `true`, a key set to `null` on one side and missing on the other is not counted). The JSON Patch always describes the whole document, whatever the options. `AptdotJsonCompare.changesToMarkdown(result.changes)` gives the list of differences as a Markdown table.
+
 ## Third-party code
 
 `src/vendor/yaml.min.js` is the parser from the [yaml](https://github.com/eemeli/yaml) library by Eemeli Aro (version 2.9.1, ISC licence), bundled for the browser. Its licence notice is kept at the top of the file. Everything else in this repository is MIT licensed.
@@ -75,7 +93,7 @@ npm ci
 npm test
 ```
 
-The tests check the CSV parser against Python's `csv` module on 600 generated files, check that CSV written by the JSON to CSV converter converts back to the same data, check the YAML converter against the independent js-yaml parser and with YAML written by two different libraries and by the JSON to YAML converter, and test both page interfaces in jsdom. They run on every push.
+The tests check the CSV parser against Python's `csv` module on 600 generated files, check that CSV written by the JSON to CSV converter converts back to the same data, check the YAML converter against the independent js-yaml parser and with YAML written by two different libraries and by the JSON to YAML converter, check that every JSON Patch from JSON Compare gives the right document when applied by the independent fast-json-patch library (3,000 random pairs), and test the page interfaces in jsdom. They run on every push.
 
 ## Changelog, security and issues
 

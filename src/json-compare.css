@@ -1,0 +1,460 @@
+/* ==========================================================================
+   Aptdot JSON Compare - extras on top of json-validator.css
+   (all rules scoped to .aptdot-json-compare)
+   ========================================================================== */
+.aptdot-json-compare .jc-file {
+    display: none !important;
+}
+
+.aptdot-json-compare .jc-field {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    margin: 0 !important;
+    font-size: 12px !important;
+    color: #8b949e !important;
+}
+
+.aptdot-json-compare .jc-field-label {
+    display: inline !important;
+    margin: 0 !important;
+    font-weight: 400 !important;
+    cursor: pointer !important;
+    color: #8b949e !important;
+    font-size: 12px !important;
+    white-space: nowrap !important;
+}
+
+/* Editor */
+.aptdot-json-compare .jc-gutter {
+    white-space: pre !important;
+}
+
+.aptdot-json-compare textarea.jc-input {
+    flex: 1 1 auto !important;
+    width: 100% !important;
+    min-height: 240px !important;
+    margin: 0 !important;
+    background-color: #161b22 !important;
+    color: #e6edf3 !important;
+    padding: 12px 14px !important;
+    border: none !important;
+    border-radius: 0 !important;
+    outline: none !important;
+    box-shadow: none !important;
+    font-family: Consolas, Monaco, "Courier New", monospace !important;
+    font-size: 13px !important;
+    line-height: 20px !important;
+    box-sizing: border-box !important;
+    white-space: pre !important;
+    overflow-x: auto !important;
+    resize: vertical !important;
+}
+
+.aptdot-json-compare textarea.jc-input::placeholder {
+    color: #8b949e !important;
+    opacity: 1 !important;
+}
+
+/* Options */
+.aptdot-json-compare .jc-toolbar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+}
+
+.aptdot-json-compare .jc-options {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px 16px !important;
+    padding: 10px 12px !important;
+    background: #0d1117 !important;
+    border: 1px solid #30363d !important;
+    border-radius: 6px !important;
+}
+
+.aptdot-json-compare .jc-check {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    margin: 0 !important;
+    font-size: 12.5px !important;
+    color: #c9d1d9 !important;
+    cursor: pointer !important;
+    line-height: 1.4 !important;
+}
+
+.aptdot-json-compare .jc-check input {
+    width: 15px !important;
+    height: 15px !important;
+    margin: 0 !important;
+    accent-color: #2ea043;
+    cursor: pointer !important;
+}
+
+.aptdot-json-compare .jc-check:focus-within,
+.aptdot-json-compare select.aptdot-select:focus-visible,
+.aptdot-json-compare .aptdot-tool-btn:focus-visible {
+    outline: 2px solid #58a6ff !important;
+    outline-offset: 2px !important;
+    border-radius: 4px !important;
+}
+
+/* Output */
+.aptdot-json-compare .jc-title-wrap {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: baseline !important;
+    gap: 4px 12px !important;
+}
+
+.aptdot-json-compare .jc-stats {
+    font-size: 12px !important;
+    color: #8b949e !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
+
+.aptdot-json-compare .aptdot-panel-header {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+}
+
+.aptdot-json-compare .aptdot-panel-actions {
+    display: flex !important;
+    gap: 6px !important;
+}
+
+.aptdot-json-compare pre.jc-patch {
+    margin: 0 !important;
+    padding: 12px 14px !important;
+    max-height: 560px !important;
+    overflow: auto !important;
+    background: #161b22 !important;
+    border: 0 !important;
+    border-radius: 0 0 8px 8px !important;
+    color: #e6edf3 !important;
+    font-family: Consolas, Monaco, "Courier New", monospace !important;
+    font-size: 13px !important;
+    line-height: 20px !important;
+    white-space: pre !important;
+    box-shadow: none !important;
+}
+
+.aptdot-json-compare pre.jc-patch code {
+    background: transparent !important;
+    border: 0 !important;
+    padding: 0 !important;
+    color: inherit !important;
+    font: inherit !important;
+    white-space: inherit !important;
+}
+
+.aptdot-json-compare .jc-warn {
+    background: #21262d !important;
+    border-left: 4px solid #d29922 !important;
+    color: #e3b341 !important;
+}
+
+.aptdot-json-compare .jc-error {
+    background: #261c0e !important;
+    border-left: 4px solid #f85149 !important;
+    color: #ff7b72 !important;
+}
+
+.aptdot-json-compare .jc-list {
+    margin: 6px 0 0 18px !important;
+    padding: 0 !important;
+}
+
+.aptdot-json-compare .jc-list li,
+.aptdot-json-compare .jc-msg {
+    margin: 2px 0 !important;
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+    color: inherit !important;
+}
+
+.aptdot-json-compare .jc-more {
+    border-top: 1px solid #30363d !important;
+}
+
+/* Two editors side by side */
+.aptdot-json-compare .jc-panes {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+    gap: 12px !important;
+    margin: 0 0 12px !important;
+}
+
+.aptdot-json-compare .jc-pane {
+    display: flex !important;
+    flex-direction: column !important;
+    min-width: 0 !important;
+}
+
+.aptdot-json-compare .jc-pane-head {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    margin: 0 0 6px !important;
+}
+
+.aptdot-json-compare .jc-pane-title {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: #c9d1d9 !important;
+}
+
+.aptdot-json-compare .jc-upload {
+    padding: 4px 10px !important;
+    font-size: 12px !important;
+    cursor: pointer !important;
+}
+
+.aptdot-json-compare .jc-frame {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+}
+
+.aptdot-json-compare .jc-hidden {
+    display: none !important;
+}
+
+.aptdot-json-compare .aptdot-dropdown-row {
+    flex-wrap: wrap !important;
+    gap: 8px 16px !important;
+}
+
+.aptdot-json-compare input.jc-text {
+    width: 170px !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 5px 8px !important;
+    background: #0d1117 !important;
+    color: #e6edf3 !important;
+    border: 1px solid #30363d !important;
+    border-radius: 6px !important;
+    font-size: 12.5px !important;
+    font-family: Consolas, Monaco, "Courier New", monospace !important;
+    box-shadow: none !important;
+}
+
+.aptdot-json-compare input.jc-text:focus-visible {
+    outline: 2px solid #58a6ff !important;
+    outline-offset: 1px !important;
+}
+
+.aptdot-json-compare .jc-file-name {
+    font-weight: 400 !important;
+    color: #8b949e !important;
+    word-break: break-all !important;
+}
+
+/* Change list header and clickable paths */
+.aptdot-json-compare .jc-list-head {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    margin: 0 0 8px !important;
+}
+
+.aptdot-json-compare button.jc-jump {
+    display: inline !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: none !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    text-align: left !important;
+    cursor: pointer !important;
+    color: #58a6ff !important;
+    font: inherit !important;
+    min-height: 0 !important;
+    line-height: inherit !important;
+}
+
+.aptdot-json-compare table.jc-table button.jc-jump code {
+    color: #58a6ff !important;
+    text-decoration: underline dotted !important;
+    text-underline-offset: 3px !important;
+}
+
+.aptdot-json-compare table.jc-table button.jc-jump:hover code,
+.aptdot-json-compare table.jc-table button.jc-jump:focus-visible code {
+    text-decoration: underline solid !important;
+}
+
+.aptdot-json-compare button.jc-jump:focus-visible {
+    outline: 2px solid #58a6ff !important;
+    outline-offset: 2px !important;
+    border-radius: 3px !important;
+}
+
+.aptdot-json-compare .jc-line.jc-flash {
+    outline: 2px solid #58a6ff !important;
+    outline-offset: -2px !important;
+}
+
+/* Summary */
+.aptdot-json-compare .aptdot-panel-title.jc-has-diff {
+    color: #e3b341 !important;
+}
+
+/* Change list */
+.aptdot-json-compare .jc-table-wrap {
+    max-height: 420px !important;
+    overflow: auto !important;
+    margin: 0 0 12px !important;
+    border: 1px solid #30363d !important;
+    border-radius: 6px !important;
+}
+
+.aptdot-json-compare table.jc-table {
+    width: 100% !important;
+    margin: 0 !important;
+    border-collapse: collapse !important;
+    font-size: 12.5px !important;
+    background: #0d1117 !important;
+    color: #c9d1d9 !important;
+    border: 0 !important;
+}
+
+.aptdot-json-compare table.jc-table th,
+.aptdot-json-compare table.jc-table td {
+    padding: 6px 10px !important;
+    border: 0 !important;
+    border-bottom: 1px solid #21262d !important;
+    text-align: left !important;
+    vertical-align: top !important;
+    word-break: normal !important;
+    overflow-wrap: anywhere !important;
+    background: transparent !important;
+}
+
+.aptdot-json-compare table.jc-table th {
+    position: sticky !important;
+    top: 0 !important;
+    background: #161b22 !important;
+    color: #8b949e !important;
+    font-weight: 600 !important;
+}
+
+.aptdot-json-compare table.jc-table code {
+    background: transparent !important;
+    border: 0 !important;
+    padding: 0 !important;
+    color: #e6edf3 !important;
+    font-family: Consolas, Monaco, "Courier New", monospace !important;
+    font-size: 12.5px !important;
+    white-space: pre-wrap !important;
+}
+
+.aptdot-json-compare table.jc-table td:nth-child(2) {
+    white-space: nowrap !important;
+    overflow-wrap: normal !important;
+}
+
+.aptdot-json-compare tr.jc-row-added td:nth-child(2) { color: #3fb950 !important; }
+.aptdot-json-compare tr.jc-row-removed td:nth-child(2) { color: #ff7b72 !important; }
+.aptdot-json-compare tr.jc-row-changed td:nth-child(2),
+.aptdot-json-compare tr.jc-row-type td:nth-child(2) { color: #e3b341 !important; }
+
+/* Side-by-side view */
+.aptdot-json-compare .jc-sides {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+    gap: 12px !important;
+    margin: 0 0 12px !important;
+}
+
+.aptdot-json-compare .jc-side {
+    min-width: 0 !important;
+    border: 1px solid #30363d !important;
+    border-radius: 6px !important;
+    overflow: hidden !important;
+}
+
+.aptdot-json-compare .jc-side-title {
+    padding: 6px 10px !important;
+    background: #161b22 !important;
+    color: #8b949e !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    border-bottom: 1px solid #30363d !important;
+}
+
+.aptdot-json-compare pre.jc-view {
+    margin: 0 !important;
+    padding: 6px 0 !important;
+    max-height: 520px !important;
+    overflow: auto !important;
+    background: #0d1117 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    color: #e6edf3 !important;
+    font-family: Consolas, Monaco, "Courier New", monospace !important;
+    font-size: 12.5px !important;
+    line-height: 19px !important;
+    white-space: pre !important;
+    box-shadow: none !important;
+}
+
+.aptdot-json-compare .jc-line {
+    display: inline-block !important;
+    min-width: 100% !important;
+    padding-right: 10px !important;
+    box-sizing: border-box !important;
+}
+
+.aptdot-json-compare .jc-ln {
+    display: inline-block !important;
+    width: 3.2em !important;
+    margin-right: 10px !important;
+    padding-right: 6px !important;
+    text-align: right !important;
+    color: #6e7681 !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+}
+
+/* Colours plus a left marker, so changes are visible without relying on colour alone */
+.aptdot-json-compare .jc-line.jc-add { background: rgba(46, 160, 67, 0.18) !important; box-shadow: inset 3px 0 0 #3fb950 !important; }
+.aptdot-json-compare .jc-line.jc-del { background: rgba(248, 81, 73, 0.18) !important; box-shadow: inset 3px 0 0 #f85149 !important; }
+.aptdot-json-compare .jc-line.jc-chg { background: rgba(210, 153, 34, 0.18) !important; box-shadow: inset 3px 0 0 #d29922 !important; }
+
+.aptdot-json-compare .jc-patch-head {
+    border: 1px solid #30363d !important;
+    border-bottom: 0 !important;
+    border-radius: 8px 8px 0 0 !important;
+}
+
+.aptdot-json-compare pre.jc-patch {
+    border: 1px solid #30363d !important;
+    border-top: 0 !important;
+    max-height: 420px !important;
+}
+
+/* Tablets and phones: stack the two sides */
+@media (max-width: 900px) {
+    .aptdot-json-compare .jc-panes,
+    .aptdot-json-compare .jc-sides {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+}
+
+/* Phones: 16px stops iPhones zooming into the input boxes */
+@media (max-width: 768px) {
+    .aptdot-json-compare textarea.jc-input,
+    .aptdot-json-compare input.jc-text {
+        font-size: 16px !important;
+    }
+    .aptdot-json-compare textarea.jc-input {
+        min-height: 200px !important;
+    }
+    /* The change table scrolls sideways inside its own box instead of squeezing words */
+    .aptdot-json-compare table.jc-table {
+        min-width: 560px !important;
+    }
+}

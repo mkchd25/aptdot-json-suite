@@ -2,6 +2,20 @@
 
 All notable changes to this project are listed here. Versions follow [Semantic Versioning](https://semver.org/).
 
+## [2.3.0] - 2026-11-25
+
+### Added
+- JSON Compare (`src/json-compare.js`, `src/json-compare.css`), live at https://www.aptdot.com/tools/json-compare/.
+  - Lists every added, removed and changed value with its path, and highlights the lines side by side.
+  - Reads JSON with its own parser, so large numbers are compared digit by digit (`12345678901234567890` and `12345678901234567891` are different); `1`, `1.0` and `1e0` count as equal by default, with a note.
+  - Key order never counts as a difference. Lists can be compared smartly (Myers difference algorithm), by position, ignoring order, or by matching objects on a key such as `id`.
+  - Keys such as `updatedAt` can be ignored anywhere in the document.
+  - Duplicate keys, comments and trailing commas are accepted and reported; syntax errors show the side, line and column.
+  - Exports the changes as JSON Patch (RFC 6902) with exact numbers; the patch stays available when the only differences are ones your options ignore.
+  - "Missing key = null" option, for comparing programs that leave out empty fields with ones that write them as `null`.
+  - Click a path in the change list to jump to it in the side-by-side view; "Copy as Markdown" copies the list for pull requests and tickets; uploaded file names are shown above each side.
+- Tests: `tests/test-json-compare.mjs` (3,000 random pairs whose patch is applied by fast-json-patch, page interface in jsdom).
+
 ## [2.2.0] - 2026-11-20
 
 ### Added
